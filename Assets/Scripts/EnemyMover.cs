@@ -6,12 +6,6 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private int _speed;
 
     private Coroutine _coroutine;
-    private Transform _target;
-
-    public void AssignTargetObject(Transform transform)
-    {
-        _target = transform;
-    }
 
     private void Start()
     {
@@ -20,10 +14,12 @@ public class EnemyMover : MonoBehaviour
 
     private IEnumerator Move()
     {
-        while (_target != null)
+        bool isWorking = true;
+
+        while (isWorking)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
             yield return null;
+            transform.position += transform.forward * _speed * Time.deltaTime;
         }
     }
 }

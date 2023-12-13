@@ -6,19 +6,19 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<SpawnPoint> _spawnPoints;
 
-    private Coroutine _currentCoroutine;
+    private Coroutine _spawnCoroutine;
     private float _spawnInterval = 2.0f;
 
     private void Start()
     {
-        _currentCoroutine = StartCoroutine(SpawnEnemy());
+        _spawnCoroutine = StartCoroutine(SpawnEnemy());
     }
 
-    private void Stop()
+    private void OnDestroy()
     {
-        if (_currentCoroutine != null)
+        if (_spawnCoroutine != null)
         {
-            StopCoroutine(_currentCoroutine);
+            StopCoroutine(_spawnCoroutine);
         }
     }
 
@@ -26,14 +26,14 @@ public class Spawner : MonoBehaviour
     {
         bool isWorking = true;
         var waitForSecond = new WaitForSeconds(_spawnInterval);
-        int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
         while (isWorking)
         {
-            yield return waitForSecond;
-
-            SpawnPoint spawnPoint = _spawnPoints[spawnIndex];
-            spawnPoint.Awake();
+            foreach (var spawn in _spawnPoints)
+            {
+                spawn.SpawnEnemy();
+                yield return waitForSecond;
+            }
         }
     }
 }

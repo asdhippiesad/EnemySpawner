@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    [SerializeField] private EnemyMover _enemy;
-    [SerializeField] private Transform _transform;
+    [SerializeField] private GameObject _enemyPrefab;
 
-    public void Awake()
+    public void SpawnEnemy()
     {
-        EnemyMover newEnemy = Instantiate(_enemy, transform.position, Quaternion.identity);
-        newEnemy.AssignTargetObject(_transform);
+        GameObject newEnemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
     }
 }
