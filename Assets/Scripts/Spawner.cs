@@ -26,14 +26,14 @@ public class Spawner : MonoBehaviour
     {
         bool isWorking = true;
         var waitForSecond = new WaitForSeconds(_spawnInterval);
+        int spawnPointIndex = 0;
 
         while (isWorking)
         {
-            foreach (var spawn in _spawnPoints)
-            {
-                spawn.SpawnEnemy();
-                yield return waitForSecond;
-            }
+            yield return waitForSecond;
+
+            SpawnPoint spawnPoint = _spawnPoints[spawnPointIndex];
+            spawnPoint.SpawnEnemy();
         }
     }
 }
